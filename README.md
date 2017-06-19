@@ -45,7 +45,7 @@ And then execute:
     ```ruby
     # config/routes.rb
 
-    get :comment_stats, :controller => :comments
+    get :comment_stats, controller: :comments
     ```
 
 3. Fill in the logic in your controller
@@ -55,7 +55,7 @@ And then execute:
     def comment_stats
       @stats = Comment.get_stats
 
-      render :partial => "comment_stats"
+      render partial: "comment_stats"
     end
     ```
 
