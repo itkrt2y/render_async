@@ -7,19 +7,20 @@
 
 <% content_for :render_async do %>
   <%= javascript_tag html_options do %>
-    (function($){
-      $.ajax({
-          url: "<%= path %>",
+    (function(){
+      fetch('<%= path %>', { credentials: 'same-origin' })
+        .then(function (response) {
+          return response.text()
+        }).then(function (html) {
+          document.querySelector('#<%= container_name %>').innerHTML = html
+        }).catch(function (error) {
+          console.log(error)
+        }).then(function () {
+          var element = document.querySelector('#<%= container_name %>_spinner');
+          if (element) {
+            element.style.display = 'none'
+          }
         })
-        .done(function(response, status) {
-          $("#<%= container_name %>").html(response);
-        })
-        .fail(function(response, status) {
-          $("#<%= container_name %>").html(response);
-        })
-        .always(function(response, status) {
-          $("#<%= container_name %>_spinner").hide();
-        });
-    }(jQuery));
+    }());
   <% end %>
 <% end %>
