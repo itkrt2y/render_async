@@ -84,6 +84,31 @@ And then execute:
     *= require render_async
     */
     ```
+    
+7. (optional) Pass `event_name: <event name>` to hook events
+
+    ```rb
+    # application.html.erb
+
+    <%= content_for :render_async, event_name: 'foo' %>
+    ```
+
+    ```js
+    // application.js
+ 
+    document.addEventListener('success-foo', function () {
+      console.log('success')
+    });
+ 
+    document.addEventListener('error-foo', function () {
+      console.log('fail')
+    });
+ 
+    // Call `complete-<event_name>` whether success or error
+    document.addEventListener('complete-foo', function () {
+      console.log('complete')
+    });
+    ```
 
 ## Advanced usage
 
